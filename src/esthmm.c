@@ -24,6 +24,8 @@
 #include <gsl/gsl_math.h>
 #include <gsl/gsl_statistics.h>
 #include <gsl/gsl_sort.h>
+#include <cuda_runtime.h>
+#include <helper_cuda.h>
 
 void Usage(char *name);
 
@@ -463,6 +465,27 @@ int main (int argc, char **argv)
     double **delta = dmatrix(T, hmm.N);
     double *logproba = dvector(P);
     double  **posterior = dmatrix(T, hmm.N);
+
+    double *h_emission_matrix = 0;
+    double *d_emission_matrix = 0;
+    size_t emission_matrix_size = hmm.N * T * sizeof(*h_emission_matrix);
+    h_emission_matrix = (double *)malloc (emission_matrix_size);
+    for (i = 0; i < hmm.N; i++) {
+      for (j = 0; j < T; j++) {
+          h_emission_matrix[i * T + j] = gsl_matrix_get(emission_matrix, i, j);
+      }
+    }
+
+    checkCudaErrors( cudaMalloc((void **), &d_emission_matrix, emission_matrix_size) )
+    checkCudaErrors( cudaMemcpy( d_emission_matrix, 
+                                 h_emission_matrix, 
+                                 emission_matrix_size, 
+                                 cudaMemcpyHostToDevice ) );
+    
+    cudaFree(d_emission_matrix);
+    free(h_emission_matrix);
+
+
     Viterbi(&hmm, T, g, alpha, beta, gamma, logprobf, delta, psi, q,
             vprob, logproba, posterior, P, peakPos, emission_matrix, pwm_matrix);
     free_dmatrix(delta, T, hmm.N);
