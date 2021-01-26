@@ -476,11 +476,11 @@ int main (int argc, char **argv)
       }
     }
 
-    checkCudaErrors( cudaMalloc((void **), &d_emission_matrix, emission_matrix_size) )
-    checkCudaErrors( cudaMemcpy( d_emission_matrix, 
-                                 h_emission_matrix, 
-                                 emission_matrix_size, 
-                                 cudaMemcpyHostToDevice ) );
+    cudaMalloc((void **), &d_emission_matrix, emission_matrix_size);
+    cudaMemcpy( d_emission_matrix, 
+                h_emission_matrix, 
+                emission_matrix_size, 
+                cudaMemcpyHostToDevice );
     
     cudaFree(d_emission_matrix);
     free(h_emission_matrix);
