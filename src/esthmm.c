@@ -475,7 +475,7 @@ int main (int argc, char **argv)
       }
     }
 
-    cudaMalloc((void **), &d_emission_matrix, emission_matrix_size);
+    cudaMalloc((void **) &d_emission_matrix, emission_matrix_size);
     cudaMemcpy( d_emission_matrix, 
                 h_emission_matrix, 
                 emission_matrix_size, 
