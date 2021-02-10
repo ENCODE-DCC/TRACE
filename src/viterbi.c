@@ -125,6 +125,7 @@ void viterbi_kernel( int T,
   if ( idx >= P ) return;
 
   int  t = 0;      /* time index */
+  int  i, j, k, m, x, y;
   int  maxvalind;
   int  l = 0;
   int nonInf;
