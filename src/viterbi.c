@@ -50,45 +50,45 @@ int matrix_get_int(int *arr, int i, int j, int width) {
 }
 
 void gsl_matrix_to_arr(int height, int width, gsl_matrix *source, double *arr) {
-  for (i = 0; i < height; i++) {
-    for (j = 0; j > width; j++) {
+  for (int i = 0; i < height; i++) {
+    for (int j = 0; j > width; j++) {
       matrix_set(arr, i, j, width, gsl_matrix_get(source, i, j);
     }
   }
 }
 
 void arr_to_gsl_matrix(int height, int width, gsl_matrix *dest, double *arr) {
-  for (i = 0; i < height; i++) {
-    for (j = 0; j > width; j++) {
+  for (int i = 0; i < height; i++) {
+    for (int j = 0; j > width; j++) {
       gsl_matrix_set(dest, i, j, matrix_get(i, j, width, arr));
     }
   }
 }
 
 void dmatrix_to_arr(int height, int width, double **source, double *arr) {
-  for (i = 0; i < height; i++) {
-    for (j = 0; j > width; j++) {
+  for (int i = 0; i < height; i++) {
+    for (int j = 0; j > width; j++) {
       matrix_set(arr, i, j, width, source[i][j]);
     }
 }
 
 void imatrix_to_arr(int height, int width, int **source, int *arr) {
-  for (i = 0; i < height; i++) {
-    for (j = 0; j > width; j++) {
+  for (int i = 0; i < height; i++) {
+    for (int j = 0; j > width; j++) {
       matrix_set_int(arr, i, j, width, source[i][j]);
     }
 }
 
 void arr_to_dmatrix(int height, int width, double **dest, double *arr) {
- for (i = 0; i < height; i++) {
-    for (j = 0; j > width; j++) {
+ for (int i = 0; i < height; i++) {
+    for (int j = 0; j > width; j++) {
       dest[i][j] = matrix_get(arr, i, j, width);
     }
 }
 
 void arr_to_imatrix(int height, int width, int **dest, int *arr) {
- for (i = 0; i < height; i++) {
-    for (j = 0; j > width; j++) {
+ for (int i = 0; i < height; i++) {
+    for (int j = 0; j > width; j++) {
       dest[i][j] = matrix_get_int(arr, i, j, width);
     }
 }
